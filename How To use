@@ -1,0 +1,5 @@
+# Compress
+./huff -c ../data/lorem.txt compressed.huff
+
+# Decompress
+./huff -d compressed.huff recovered.txt
