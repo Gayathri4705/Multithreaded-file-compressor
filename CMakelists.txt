@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.15)
+project(FileCompressor LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+add_library(hufflib
+    src/bitio.cpp
+    src/huffman.cpp
+    src/compressor.cpp
+)
+
+add_executable(huff src/main.cpp)
+target_link_libraries(huff PRIVATE hufflib)
+
+# Enable sanitizers in Debug
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(hufflib PRIVATE -fsanitize=address,undefined)
+    target_link_options(huff PRIVATE -fsanitize=address,undefined)
+endif()
